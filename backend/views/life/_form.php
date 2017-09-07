@@ -24,7 +24,7 @@ $this->registerJs($js, View::POS_END);
 
     <?= $form->field($model, 'cid')->dropDownList(Life::loadCategory(), []) ?>
 
-    <?= $form->field($model, 'cover')->imgInput(['style' => 'max-width:200px;max-height:200px']); ?>
+    <?= $form->field($model, 'cover')->imgInput(['style' => 'max-width:200px; max-height:200px; margin: 5px 0px;']); ?>
 
     <?= $form->field($model, 'content')->widget(Ueditor::className()) ?>
 
