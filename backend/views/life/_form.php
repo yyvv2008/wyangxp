@@ -22,11 +22,11 @@ $this->registerJs($js, View::POS_END);
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'cid')->dropDownList(Life::loadCategory(), []) ?>
+    <?= $form->field($model, 'cid')->dropDownList((new Life)->loadCategory(), []) ?>
 
     <?= $form->field($model, 'cover')->imgInput(['style' => 'max-width:200px; max-height:200px; margin: 5px 0px;']); ?>
 
-    <?= $form->field($model, 'content')->widget(Ueditor::className()) ?>
+    <?= $form->field($model, 'content')->widget(Ueditor::className(), ['options' => ['class' => 'form_ueditor']]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-main']) ?>

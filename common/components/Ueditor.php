@@ -34,6 +34,7 @@ use yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 use backend\assets\UeditorAsset;
 
 /**
@@ -186,6 +187,8 @@ class Ueditor extends yii\widgets\InputWidget
 
         $id = $this->hasModel() ? Html::getInputId($this->model, $this->attribute) : $this->id;
 
+        $options = ArrayHelper::merge($this->options, ['id' => $id]);
+
         $config = Json::encode($this->config);
 
         //ready部分代码，是为了缩略图管理。UEditor本身就很大，在后台直接加载大文件图片会很卡。
@@ -203,9 +206,9 @@ UEDITOR;
         $this->getView()->registerJs($script);
 
         if ($this->hasModel()) {
-            return Html::activeTextarea($this->model, $this->attribute);
+            return Html::activeTextarea($this->model, $this->attribute, $this->options);
         } else {
-            return Html::textarea($this->name, $this->value, ['id' => $id]);
+            return Html::textarea($this->name, $this->value, $options);
         }
     }
 }

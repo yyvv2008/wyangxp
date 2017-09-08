@@ -4,6 +4,9 @@ namespace common\components;
 
 use yii;
 use common\models\Menu;
+use common\models\User;
+use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 /**
  * summary
@@ -33,6 +36,7 @@ class BaseModel extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'category_format' => Yii::t('app', 'Cid'),
             'created_at_format' => Yii::t('app', 'Created At'),
             'updated_at_format' => Yii::t('app', 'Updated At'),
             'start_created_at' => Yii::t('app', 'Start Created At'),
@@ -41,6 +45,18 @@ class BaseModel extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+
+    public function getAuthor()
+    {
+        return User::findOne(['id' => $this->uid])->username;
+    }
+
+    public function getCategory_format()
+    {
+        if ($this->hasAttribute('cid')) {
+            return Menu::findOne(['id' => $this->cid])->name;
+        }
     }
 
     public function getStatus_format()
@@ -59,13 +75,79 @@ class BaseModel extends \yii\db\ActiveRecord
     	];
     }
 
-    public static function loadOptions($models = [])
+    public function getRemend_format()
     {
+        if ($this->hasAttribute('remend')) {
+            $remendOption = self::loadRemend();
+            return $remendOption[$this->remend];
+        }
+    }
+
+    public static function loadremend()
+    {
+        return [
+            self::STATUS_NO => yii::t('app', 'Not Remend'),
+            self::STATUS_YES => yii::t('app', 'Remend'),
+        ];
+    }
+
+    public function loadCategory()
+    {
+        $models = Menu::findAll(['parent_id' => $this->class_id]);
+
         $datas = [];
         foreach ($models as $model) {
             $datas[$model->id] = $model->name;
         }
 
         return $datas;
+    }
+
+    public static function loadAuthor()
+    {
+        $models = User::find()->all();
+
+        $datas = [];
+        foreach ($models as $model) {
+            $datas[$model->id] = $model->username;
+        }
+
+        return $datas;
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($this->hasAttribute('cover')) {
+            $upload = UploadedFile::getInstance($this, 'cover');
+            if ($upload !== null) {
+                $uploadPath = yii::getAlias('@cover/');
+                if (!FileHelper::createDirectory($uploadPath)) {
+                    $this->addError('cover', Yii::t('app', "Create directory failed ") . $uploadPath);
+                    return false;
+                }
+
+                $fullName = $uploadPath . uniqid() . '_' . $upload->baseName . '.' . $upload->extension;
+                if (!$upload->saveAs($fullName)) {
+                    $this->addError('cover', yii::t('app', 'Upload {attribute} error: ' . $upload->error, ['attribute' => yii::t('app', 'Cover')]) . ': ' . $fullName);
+                    return false;
+                }
+
+                $this->cover = str_replace(yii::getAlias('@backend/web'), '', $fullName);
+                if(!$insert){
+                    $file = yii::getAlias('@backend/web') . $this->getOldAttribute('cover');
+                    if (file_exists($file) && is_file($file)) {
+                        unlink($file);
+                    }
+                }
+            } else {
+                $this->cover = $this->getOldAttribute('cover');
+            }            
+        }
+
+        if ($this->hasAttribute('uid')) {
+            $this->uid = Yii::$app->user->id;
+        }
+
+        return parent::beforeSave($insert);
     }
 }

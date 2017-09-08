@@ -3,8 +3,8 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 use common\models\Menu;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "life".
@@ -22,7 +22,7 @@ use common\models\Menu;
  */
 class Life extends \common\components\BaseModel
 {
-    const CLASS_ID = 2;
+    public $class_id = 2;
     /**
      * @inheritdoc
      */
@@ -60,23 +60,5 @@ class Life extends \common\components\BaseModel
             'remend' => Yii::t('app', 'Remend'),
             'status' => Yii::t('app', 'Status'),
         ]);
-    }
-
-    public function beforeSave($insert)
-    {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
-
-        $this->uid = Yii::$app->user->id;
-
-        return true;
-    }
-
-    public static function loadCategory()
-    {
-        $models = Menu::findAll(['parent_id' => self::CLASS_ID]);
-
-        return self::loadOptions($models);
     }
 }

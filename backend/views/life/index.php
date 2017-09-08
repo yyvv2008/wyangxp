@@ -3,9 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-/* @var $this yii\web\View */
-/* @var $searchModel backend\models\LifeSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use common\models\Life;
 
 $this->title = Yii::t('app', 'No Hurry Hug Me');
 ?>
@@ -19,17 +17,52 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'rowOptions' => ['class' => 'grid_cover'],
+            'headerRowOptions' => ['class' => 'grid_header'],
             'columns' => [
                 // ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                'cover',
+                [
+                    'attribute' => 'id',
+                    'filter' => '',
+                ],
+                [
+                    'attribute' => 'cover',
+                    'format' => 'image',
+                    'filter' => '',
+                ],
                 'title',
-                'uid',
-                'cid',
+                [
+                    'attribute' => 'uid',
+                    'value' => function($model) {
+                        return $model->author;
+                    },
+                    'filter' => Life::loadAuthor(),
+                ],
+                [
+                    'attribute' => 'cid',
+                    'value' => function($model) {
+                        return $model->category_format;
+                    },
+                    'filter' => (new Life)->loadCategory(),
+                ],
                 // 'content:ntext',
-                'remend',
-                'status',
+                [
+                    'attribute' => 'remend',
+                    'label' => yii::t('app', 'remend'),
+                    'value' => function($model) {
+                        return $model->remend_format;
+                    },
+                    'filter' => Life::loadRemend(),
+                ],
+                [
+                    'attribute' => 'status',
+                    'label' => yii::t('app', 'Status'),
+                    'value' => function($model) {
+                        return $model->status_format;
+                    },
+                    'filter' => Life::loadStatus(),
+                ],
                 [
                     'attribute' => 'created_at',
                     'format' => ['date', 'php:Y-m-d H:i:s'],
@@ -39,7 +72,10 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     'format' => ['date', 'php:Y-m-d H:i:s'],
                 ],
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view}　{update}　{delete}',
+                ],
             ],
         ]); ?>
     <?php Pjax::end(); ?>

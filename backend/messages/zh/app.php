@@ -13,6 +13,8 @@ return [
     'Create' => '创建',
     'Update' => '更新',
     'Choose File' => '选择文件',
+    "Create directory failed " => '创建目录失败',
+    'Upload {attribute} error' => '上传{attribute}出错',
 
     'No Hurry Hug Me' => '莫慌，抱紧哥',
 
@@ -32,6 +34,7 @@ return [
     'Cover' => '封面',
     'Content' => '内容',
     'Remend' => '推荐',
+    'Not Remend' => '不推荐',
 
 
     /*Learning*/
