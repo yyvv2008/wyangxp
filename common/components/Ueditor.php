@@ -146,7 +146,6 @@ class Ueditor extends yii\widgets\InputWidget
                     'directionalityltr',
                     'directionalityrtl',
                     'indent',
-                    '|'
                 ],
                 [
                     'justifyleft',

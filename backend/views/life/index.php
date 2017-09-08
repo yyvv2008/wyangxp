@@ -9,11 +9,13 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
 ?>
 
 <div class="life-index">
+
     <p class="buttons">
         <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
+    
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -39,17 +41,17 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     },
                     'filter' => Life::loadAuthor(),
                 ],
-                [
-                    'attribute' => 'cid',
-                    'value' => function($model) {
-                        return $model->category_format;
-                    },
-                    'filter' => (new Life)->loadCategory(),
-                ],
+                // [
+                //     'attribute' => 'cid',
+                //     'value' => function($model) {
+                //         return $model->category_format;
+                //     },
+                //     'filter' => (new Life)->loadCategory(),
+                // ],
                 // 'content:ntext',
                 [
                     'attribute' => 'remend',
-                    'label' => yii::t('app', 'remend'),
+                    'label' => yii::t('app', 'Remend'),
                     'value' => function($model) {
                         return $model->remend_format;
                     },
@@ -71,12 +73,13 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     'attribute' => 'updated_at',
                     'format' => ['date', 'php:Y-m-d H:i:s'],
                 ],
-
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}　{update}　{delete}',
                 ],
             ],
         ]); ?>
+
     <?php Pjax::end(); ?>
+
 </div>

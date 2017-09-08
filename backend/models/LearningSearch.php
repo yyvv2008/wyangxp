@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Learning;
+use common\models\Menu;
 
 /**
  * LearningSearch represents the model behind the search form about `common\models\Learning`.
@@ -57,6 +58,10 @@ class LearningSearch extends Learning
             return $dataProvider;
         }
 
+        if (!empty($params['c'])) {
+            $this->cid = Menu::findOne(['name' => $params['c']])->id;
+        }
+        
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

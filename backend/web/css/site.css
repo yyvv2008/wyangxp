@@ -64,12 +64,23 @@ form .form-control {
 .grid_cover img, .view_cover img {
     width: 100px;
     height: 100px;
+    border-radius: 50%;
+}
+
+.view_content {
+    text-align: left;
 }
 
 .form_ueditor {
-    width: 50%;
+    width: 60%;
     display: inline-block;
     vertical-align: middle;
+}
+
+.img_input {
+    max-width:200px;
+    max-height:200px;
+    margin: 5px 0px;
 }
 
 

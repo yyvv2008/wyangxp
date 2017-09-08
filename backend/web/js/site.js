@@ -1,4 +1,10 @@
 $(function() {
+	var common = {
+        chooseFile: "选择文件",
+    }
+    $("input[type=file]").prettyFile({text:common.chooseFile});
+
+    
 	$('.nav-body>a').click(function() {
 		var ul = $(this).siblings('ul');
 

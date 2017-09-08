@@ -1,23 +1,5 @@
-<?php
+<?php 
 
-use yii\helpers\Html;
+$this->title = Yii::t('app', 'No Hurry Hug Me');
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Learning */
-
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Learning',
-]) . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Learnings'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
-?>
-<div class="learning-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+echo $this->render('_form', ['model' => $model]);

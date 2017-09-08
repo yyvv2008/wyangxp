@@ -13,18 +13,28 @@ $this->title = $model->title;
         'attributes' => [
             'id',
             'title',
-            'uid',
-            'cid',
+            'author',
+            'category_format',
             [
                 'attribute' => 'cover',
                 'format' => 'image',
                 'contentOptions' => ['class' => 'view_cover'],
             ],
-            'content:raw',
-            'remend',
-            'status',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'content',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'view_content'],
+            ],
+            'remend_format',
+            'status_format',
+            [
+                'attribute' => 'created_at',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
         ],
     ]) ?>
 

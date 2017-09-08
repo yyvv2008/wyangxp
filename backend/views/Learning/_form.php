@@ -1,39 +1,28 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use common\models\Learning;
+use common\components\BaseActiveForm;
+use common\components\Ueditor;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Learning */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="learning-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = BaseActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'uid')->textInput() ?>
+    <?= $form->field($model, 'cid')->dropDownList((new Learning)->loadCategory(), []) ?>
 
-    <?= $form->field($model, 'cid')->textInput() ?>
+    <?= $form->field($model, 'cover')->imgInput(['class' => 'img_input']); ?>
 
-    <?= $form->field($model, 'cover')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'remend')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'content')->widget(Ueditor::className(), ['options' => ['class' => 'form_ueditor']]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-main']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php BaseActiveForm::end(); ?>
 
 </div>

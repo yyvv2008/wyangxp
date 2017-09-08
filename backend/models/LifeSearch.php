@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Life;
+use common\models\Menu;
 
 /**
  * LifeSearch represents the model behind the search form about `common\models\Life`.
@@ -55,6 +56,10 @@ class LifeSearch extends Life
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if (!empty($params['c'])) {
+            $this->cid = Menu::findOne(['name' => $params['c']])->id;
         }
 
         // grid filtering conditions

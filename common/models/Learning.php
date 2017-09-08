@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  */
 class Learning extends \common\components\BaseModel
 {
+    public $class_id = 3;
     /**
      * @inheritdoc
      */
@@ -35,7 +36,7 @@ class Learning extends \common\components\BaseModel
     public function rules()
     {
         return [
-            [['title', 'uid', 'cid', 'content'], 'required'],
+            [['title', 'cid', 'content'], 'required'],
             [['uid', 'cid', 'remend', 'status', 'created_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['title'], 'string', 'max' => 60],

@@ -36,6 +36,8 @@ class BaseModel extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'author' => Yii::t('app', 'Uid'),
+            'remend_format' => Yii::t('app', 'Remend'),
             'category_format' => Yii::t('app', 'Cid'),
             'created_at_format' => Yii::t('app', 'Created At'),
             'updated_at_format' => Yii::t('app', 'Updated At'),
@@ -127,6 +129,7 @@ class BaseModel extends \yii\db\ActiveRecord
                 }
 
                 $fullName = $uploadPath . uniqid() . '_' . $upload->baseName . '.' . $upload->extension;
+
                 if (!$upload->saveAs($fullName)) {
                     $this->addError('cover', yii::t('app', 'Upload {attribute} error: ' . $upload->error, ['attribute' => yii::t('app', 'Cover')]) . ': ' . $fullName);
                     return false;
