@@ -11,7 +11,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        /* other modules */
+        'markdown' => [
+            'class' => 'kartik\markdown\Module',
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -73,6 +78,7 @@ return [
                 ],
             ],
         ],
+
     ],
     'params' => $params,
 ];
