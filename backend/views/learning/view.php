@@ -4,8 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 $this->title = $model->title;
+
+$test = $model->content;
+// $this->registerJs("
+//     var parser = new HyperDown,
+//     html = parser.makeHtml('" . $test . "');
+//     console.log(html, 1111);
+//     $('.view_content').html(html);
+// ", \yii\web\View::POS_END);
 ?>
-<div class="life-view">
+<div class="learning-view">
 
     <?= DetailView::widget([
         'model' => $model,
