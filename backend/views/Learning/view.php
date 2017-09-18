@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Markdown;
 use yii\widgets\DetailView;
 
 $this->title = $model->title;
@@ -30,7 +31,10 @@ $this->registerJs("
             ],
             [
                 'attribute' => 'content',
-                // 'format' => 'raw',
+                'value' => function($model) {
+                    return Markdown::process($model->content, 'gfm');
+                },
+                'format' => 'raw',
                 'contentOptions' => ['class' => 'view_content'],
             ],
             'remend_format',
