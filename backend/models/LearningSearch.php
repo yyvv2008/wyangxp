@@ -61,7 +61,7 @@ class LearningSearch extends Learning
         if (!empty($params['c'])) {
             $this->cid = Menu::findOne(['name' => $params['c']])->id;
         }
-        
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

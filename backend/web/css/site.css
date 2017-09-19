@@ -249,3 +249,7 @@ pre code {
 .buttons a {
     padding: 5px 15px;
 }
+
+a.white {
+    color: #fff;
+}

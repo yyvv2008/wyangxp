@@ -75,6 +75,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}　{update}　{delete}',
+                    // 'buttonOptions' => ['data-pjax' => '1', 'class' => 'pjax'],
                 ],
             ],
         ]); ?>

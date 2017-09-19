@@ -37,4 +37,22 @@ $(function() {
         }
     });
 
+
+});
+
+
+$(document).pjax('a.pjax', '#container', {type: 'post', scrollTo: false});
+
+$(window).on('pjax:popstate', function(event) {
+    $.pjax.reload('#container', {url: event.state.url});
+});
+
+$(document).on('submit', 'form.pjax', function(event) {
+    $.pjax.submit(event, '#container');
+});
+
+$(document).on('pjax:success', function(event, json, status, xhr) {
+    if ($('.grid-view').length) {
+        $('.grid-view').yiiGridView({"filterUrl": location.href, "filterSelector": "#w0-filters input, #w0-filters select"});
+    }
 });

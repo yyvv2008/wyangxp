@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use common\models\Menu;
 
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -33,18 +34,18 @@ AppAsset::register($this);
                     <?= Html::img(Yii::$app->request->baseUrl . '/images/avatar.jpg', ['class' => 'img-circle', 'alt' => '酷酷哒']) ?>
                 </div>
                 <div class="profile">
-                    <?= Html::a(Yii::$app->user->identity->username, Url::toRoute(['']), []) ?>
+                    <?= Html::a(Yii::$app->user->identity->username, Url::toRoute(['user/info']), ['class' => 'pjax']) ?>
                 </div>
             </li>
             <?php foreach (Menu::loadMenu() as $menu): ?>
                 <li class="nav-body">
-                    <?= Html::a('<i class="' . $menu->icon . '"></i>　<span class="menu-label">' . $menu->name . '</span>' . ($menu->sub ? '<span class="arrow"><i class="fa fa-chevron-left"></i></span>' : ''), Url::toRoute([$menu->url]), []) ?>
+                    <?= Html::a('<i class="' . $menu->icon . '"></i>　<span class="menu-label">' . $menu->name . '</span>' . ($menu->sub ? '<span class="arrow"><i class="fa fa-chevron-left"></i></span>' : ''), Url::toRoute([$menu->url]), ['class' => 'pjax']) ?>
 
                     <?php if ($menu->sub): ?>
                         <ul class="menu-sub collapse">
                             <?php foreach ($menu->sub as $sub): ?>
                                 <li>
-                                    <?= Html::a($sub->name, Url::toRoute([$sub->url]), []) ?>
+                                    <?= Html::a($sub->name, Url::toRoute([$sub->url]), ['class' => 'pjax']) ?>
                                 </li>
                             <?php endforeach ?>
                         </ul>

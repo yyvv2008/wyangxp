@@ -23,6 +23,13 @@ class BaseActiveForm extends ActiveForm
             $this->options['id'] = $this->setId($id);
         }
 
+        if (!isset($this->options['class'])) {
+            $this->options['class'] = 'pjax';
+        } else {
+            $this->options['class'] = $this->options['class'] . ' pjax';
+        }
+
+
         parent::init();
     }
 

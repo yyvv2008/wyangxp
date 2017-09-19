@@ -12,9 +12,21 @@ use common\components\ueditor\UeditorAction;
  */
 class BaseBackendController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
+    public $layout = false;
+
+    public function init()
+    {
+        parent::init();
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
+// var_dump(Yii::$app->request->isPjax);exit;
+        if (!Yii::$app->request->isPjax) {
+            $this->layout = 'main';
+        }
+    }
+
     public function behaviors()
     {
         return [

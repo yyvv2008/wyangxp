@@ -18,10 +18,10 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
+        'js/jquery.pjax.js',
         'js/site.js',
         'js/laydate/laydate.js',
         'js/bootstrap-prettyfile.js',
-        'js/mk.js',
     ];
     
     public $depends = [

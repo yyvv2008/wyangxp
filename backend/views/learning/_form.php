@@ -2,12 +2,11 @@
 
 use yii\helpers\Html;
 use common\models\Learning;
-use common\components\BaseActiveForm;
 use common\components\Ueditor;
-use backend\assets\MarkdownAsset;
 use kartik\markdown\MarkdownEditor;
+use common\components\BaseActiveForm;
 
-// MarkdownAsset::register($this);
+// $this->registerJs("$.pjax.reload('#container', {url: location.href});", yii\web\View::POS_END);
 ?>
 
 <div class="learning-form">
@@ -20,8 +19,6 @@ use kartik\markdown\MarkdownEditor;
 
     <?= $form->field($model, 'cover')->imgInput(['class' => 'img_input']); ?>
 
-    <?php //echo $form->field($model, 'content')->widget(Ueditor::className(), ['options' => ['class' => 'form_ueditor']]) ?>
-    
     <?= $form->field($model, 'content')->widget(MarkdownEditor::classname(), ['height' => 300, 'encodeLabels' => false, 'footer' => '']); ?>
 
     <div class="form-group">
@@ -31,3 +28,4 @@ use kartik\markdown\MarkdownEditor;
     <?php BaseActiveForm::end(); ?>
 
 </div>
+
