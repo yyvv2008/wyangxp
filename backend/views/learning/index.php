@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
 <div class="learning-index">
 
     <p class="buttons">
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-default pjax']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
