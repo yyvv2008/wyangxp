@@ -20,7 +20,7 @@ use common\components\BaseActiveForm;
 
     <?= $form->field($model, 'cover')->imgInput(['class' => 'img_input']); ?>
 
-    <?= $form->field($model, 'content')->widget(MarkdownEditor::classname(), ['height' => 400, 'encodeLabels' => false, 'footer' => '']); ?>
+    <?= $form->field($model, 'content')->widget(MarkdownEditor::classname(), ['height' => 300, 'encodeLabels' => false, 'footer' => '']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-main']) ?>
