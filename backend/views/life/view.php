@@ -1,11 +1,16 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 $this->title = $model->title;
 ?>
 <div class="life-view">
+
+    <p class="buttons">
+        <?= Html::a('<i class="fa fa-pencil"></i> ' . Yii::t('app', 'Update'), Url::toRoute(['update', 'id' => $model->id]), ['class' => 'btn btn-default pjax']) ?>
+    </p>
 
     <?= DetailView::widget([
         'model' => $model,

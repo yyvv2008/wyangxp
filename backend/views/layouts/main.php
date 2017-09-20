@@ -36,6 +36,7 @@ AppAsset::register($this);
                 <div class="profile">
                     <?= Html::a(Yii::$app->user->identity->username, Url::toRoute(['user/info']), ['class' => 'pjax']) ?>
                 </div>
+                <div class="logo-element">H+</div>
             </li>
             <?php foreach (Menu::loadMenu() as $menu): ?>
                 <li class="nav-body">
