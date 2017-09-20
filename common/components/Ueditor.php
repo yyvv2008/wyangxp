@@ -184,7 +184,7 @@ class Ueditor extends yii\widgets\InputWidget
     public function run()
     {
 
-        $id = $this->hasModel() ? Html::getInputId($this->model, $this->attribute) : $this->id;
+        $id = ($this->hasModel() ? Html::getInputId($this->model, $this->attribute) : $this->id) . uniqid();
 
         $options = ArrayHelper::merge($this->options, ['id' => $id]);
 
@@ -205,7 +205,7 @@ UEDITOR;
         $this->getView()->registerJs($script);
 
         if ($this->hasModel()) {
-            return Html::activeTextarea($this->model, $this->attribute, $this->options);
+            return Html::activeTextarea($this->model, $this->attribute, $options);
         } else {
             return Html::textarea($this->name, $this->value, $options);
         }

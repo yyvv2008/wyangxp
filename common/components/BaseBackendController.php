@@ -21,7 +21,7 @@ class BaseBackendController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/site/login']);
         }
-// var_dump(Yii::$app->request->isPjax);exit;
+
         if (!Yii::$app->request->isPjax) {
             $this->layout = 'main';
         }

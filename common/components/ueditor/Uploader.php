@@ -405,7 +405,7 @@ class Uploader
      */
     public function getFileInfo()
     {
-        $prefix = str_replace(yii::getAlias(yii::getAlias('@frontend/web')), '', yii::getAlias('@ueditor'));
+        $prefix = str_replace(yii::getAlias(yii::getAlias('@backend/web')), '', yii::getAlias('@ueditor'));
         return array(
             "state" => $this->stateInfo,
             "url" => $prefix . $this->fullName,

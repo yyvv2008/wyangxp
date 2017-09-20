@@ -7,3 +7,4 @@ Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 
 
 Yii::setAlias('@cover', '@backend/web/uploads/cover');
+Yii::setAlias('@ueditor', '@backend/web/uploads/ueditor');

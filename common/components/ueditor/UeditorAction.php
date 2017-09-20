@@ -102,14 +102,14 @@ class UeditorAction extends yii\base\Action
         }
 
         $default = [
-            'imagePathFormat' => '/upload/image/{yyyy}{mm}{dd}/{time}{rand:8}',
-            'scrawlPathFormat' => '/upload/image/{yyyy}{mm}{dd}/{time}{rand:8}',
-            'snapscreenPathFormat' => '/upload/image/{yyyy}{mm}{dd}/{time}{rand:8}',
-            'catcherPathFormat' => '/upload/image/{yyyy}{mm}{dd}/{time}{rand:8}',
-            'videoPathFormat' => '/upload/video/{yyyy}{mm}{dd}/{time}{rand:8}',
-            'filePathFormat' => '/upload/file/{yyyy}{mm}{dd}/{rand:8}_{filename}',
-            'imageManagerListPath' => '/upload/image/',
-            'fileManagerListPath' => '/upload/file/',
+            'imagePathFormat' => '/images/{yyyy}{mm}{dd}/{time}{rand:8}',
+            'scrawlPathFormat' => '/image/{yyyy}{mm}{dd}/{time}{rand:8}',
+            'snapscreenPathFormat' => '/image/{yyyy}{mm}{dd}/{time}{rand:8}',
+            'catcherPathFormat' => '/image/{yyyy}{mm}{dd}/{time}{rand:8}',
+            'videoPathFormat' => '/video/{yyyy}{mm}{dd}/{time}{rand:8}',
+            'filePathFormat' => '/file/{yyyy}{mm}{dd}/{rand:8}_{filename}',
+            'imageManagerListPath' => '/image/',
+            'fileManagerListPath' => '/file/',
             "imageUrlPrefix" => yii::$app->request->baseUrl,
         ];
 
