@@ -18,8 +18,15 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            'rowOptions' => ['class' => 'grid_cover'],
+            // 'rowOptions' => ['class' => 'grid_cover'],
             'headerRowOptions' => ['class' => 'grid_header'],
+            'pager' => [
+                'options' => ['class' => 'pagination pull-right'],
+                'firstPageLabel'=>"首页",
+                'prevPageLabel'=>'上一页',
+                'nextPageLabel'=>'下一页',
+                'lastPageLabel'=>'尾页',
+            ],
             'columns' => [
                 // ['class' => 'yii\grid\SerialColumn'],
 
@@ -29,7 +36,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                 ],
                 [
                     'attribute' => 'cover',
-                    'format' => 'image',
+                    'format' => ['image', ['width' => 100, 'height' => 100, 'class' => 'img-circle']],
                     'filter' => '',
                 ],
                 'title',
@@ -40,14 +47,6 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     },
                     'filter' => Learning::loadAuthor(),
                 ],
-                // [
-                //     'attribute' => 'cid',
-                //     'value' => function($model) {
-                //         return $model->category_format;
-                //     },
-                //     'filter' => (new Learning)->loadCategory(),
-                // ],
-                // 'content:ntext',
                 [
                     'attribute' => 'remend',
                     'label' => yii::t('app', 'Remend'),

@@ -70,6 +70,10 @@ form .form-control {
 .view_content {
     text-align: left;
 }
+.view_content em {
+    font-size: 12px;
+    color: #666;
+}
 
 .form_ueditor {
     width: 60%;
@@ -256,6 +260,8 @@ body.mini-navbar .menu-label, body.mini-navbar .arrow, body.mini-navbar .menu-su
 
 .kv-md-preview {
     overflow: auto;
+    // border: 1px solid #8a4141;
+    // border-radius: 5px;
 }
 
 
