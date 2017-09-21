@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/font-awesome.min.css',
         'js/laydate/need/laydate.css',
+        'css/sweetalert.css',
     ];
 
     public $js = [
@@ -22,6 +23,7 @@ class AppAsset extends AssetBundle
         'js/site.js',
         'js/laydate/laydate.js',
         'js/bootstrap-prettyfile.js',
+        'js/sweetalert.min.js',
     ];
     
     public $depends = [

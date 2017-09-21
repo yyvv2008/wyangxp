@@ -6,9 +6,9 @@ use Yii;
 use yii\helpers\Url;
 use common\models\Learning;
 use backend\models\LearningSearch;
-use common\components\BaseBackendController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\components\StatusAction;
+use common\components\BaseBackendController;
 
 /**
  * LearningController implements the CRUD actions for Learning model.
@@ -106,5 +106,16 @@ class LearningController extends BaseBackendController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['status'] = [
+            'class' => StatusAction::className(),
+            'modelClass' => Learning::className(),
+        ];
+
+        return $actions;
     }
 }

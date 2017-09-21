@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -50,16 +51,46 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                 [
                     'attribute' => 'remend',
                     'label' => yii::t('app', 'Remend'),
+                    'format' => 'raw',
                     'value' => function($model) {
-                        return $model->remend_format;
+                        if ($model->remend) {
+                            $val = 0;
+                        } else {
+                            $val = 1;
+                        }
+
+                        return Html::a($model->remend_format, Url::toRoute(['status',
+                            'id' => $model->id,
+                            'field' => 'remend',
+                            'val' => $val,
+                        ]), [
+                            'data-confirm' => yii::t('app', 'Are you sure'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',     
+                        ]);
                     },
                     'filter' => Learning::loadRemend(),
                 ],
                 [
                     'attribute' => 'status',
                     'label' => yii::t('app', 'Status'),
+                    'format' => 'raw',
                     'value' => function($model) {
-                        return $model->status_format;
+                        if ($model->status) {
+                            $val = 0;
+                        } else {
+                            $val = 1;
+                        }
+
+                        return Html::a($model->status_format, Url::toRoute(['status',
+                            'id' => $model->id,
+                            'field' => 'status',
+                            'val' => $val,
+                        ]), [
+                            'data-confirm' => yii::t('app', 'Are you sure'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',     
+                        ]);
                     },
                     'filter' => Learning::loadStatus(),
                 ],

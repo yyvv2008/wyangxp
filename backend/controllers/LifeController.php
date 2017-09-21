@@ -106,4 +106,15 @@ class LifeController extends BaseBackendController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['status'] = [
+            'class' => StatusAction::className(),
+            'modelClass' => Life::className(),
+        ];
+
+        return $actions;
+    }
 }

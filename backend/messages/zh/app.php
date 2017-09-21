@@ -4,6 +4,8 @@ return [
     /*Public*/
     'Close' => '关闭',
     'Open' => '正常',
+    'Success' => '成功失败',
+    'Failed' => '失败',
     'ID' => 'ID',
     'Type' => '类型',
     'Status' => '状态',
@@ -15,6 +17,8 @@ return [
     'Choose File' => '选择文件',
     "Create directory failed " => '创建目录失败',
     'Upload {attribute} error' => '上传{attribute}出错',
+    "Cannot find model by {id}" => "数据 {id} 不存在",
+    'Are you sure' => '你确定',
 
     'No Hurry Hug Me' => '莫慌，抱紧哥',
 
