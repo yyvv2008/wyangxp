@@ -5,9 +5,9 @@ namespace backend\controllers;
 use Yii;
 use common\models\Life;
 use backend\models\LifeSearch;
-use common\components\BaseBackendController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\components\StatusAction;
+use common\components\BaseBackendController;
 
 /**
  * LifeController implements the CRUD actions for Life model.

@@ -2,8 +2,8 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\grid\GridView;
 use common\models\Learning;
 
 $this->title = Yii::t('app', 'No Hurry Hug Me');
@@ -103,10 +103,12 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                 [
                     'attribute' => 'created_at',
                     'format' => ['date', 'php:Y-m-d H:i:s'],
+                    'filter' => '',
                 ],
                 [
                     'attribute' => 'updated_at',
                     'format' => ['date', 'php:Y-m-d H:i:s'],
+                    'filter' => '',
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
