@@ -2,7 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use common\components\BaseBackendController;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -10,7 +10,7 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends BaseBackendController
+class SiteController extends Controller
 {
     /**
      * Displays homepage.
@@ -19,7 +19,7 @@ class SiteController extends BaseBackendController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // return $this->render('index');
     }
 
     /**
