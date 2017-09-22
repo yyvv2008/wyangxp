@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-09-22 11:26:19
--- 服务器版本： 5.7.16-log
+-- Generation Time: Sep 22, 2017 at 05:53 PM
+-- Server version: 5.7.16-log
 -- PHP Version: 7.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- 表的结构 `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理';
 
 --
--- 转存表中的数据 `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `auth_key`, `password_hash`, `email`, `avatar`, `status`, `created_at`, `updated_at`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `admin` (`id`, `username`, `auth_key`, `password_hash`, `email`, `av
 -- --------------------------------------------------------
 
 --
--- 表的结构 `learning`
+-- Table structure for table `learning`
 --
 
 CREATE TABLE `learning` (
@@ -65,7 +65,7 @@ CREATE TABLE `learning` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 转存表中的数据 `learning`
+-- Dumping data for table `learning`
 --
 
 INSERT INTO `learning` (`id`, `title`, `uid`, `cid`, `cover`, `content`, `remend`, `status`, `created_at`, `updated_at`) VALUES
@@ -102,12 +102,12 @@ INSERT INTO `learning` (`id`, `title`, `uid`, `cid`, `cover`, `content`, `remend
 (30, 'Node.js 实例（klha）', 1, 8, NULL, '~~~js\r\nvar net = require(\'net\');\r\nvar util = require(\'util\');\r\nvar mysql = require(\'mysql\');\r\nvar dateFormat = require(\'dateformat\');\r\n\r\nvar db = mysql.createConnection({\r\n	    host : \'localhost\',\r\n	    port : \'3306\',\r\n	    user: \'root\',\r\n	    password: \'111111\',\r\n	    database: \'yii2_iot_klha\'\r\n	});\r\n\r\nvar clients = [],\r\n	gateway_logo = \'\';\r\nvar server = net.createServer(function(socket) {\r\n	util.log(\'Client come in: \' + socket.remoteAddress +\':\'+ socket.remotePort, \'\\n\\n\');\r\n\r\n	// 握手包\r\n	socket.write(\'15012222000180\', \'hex\');\r\n\r\n	// 定义间隔任务\r\n	socket.interval = setInterval(function(_socket) {\r\n		_socket.write(\'150100000006020300000008\', \'hex\');\r\n	}, 5 * 1000 * 60, socket);\r\n\r\n	socket.on(\'data\', function(data) {\r\n		var hexData = data.toString(\'hex\');\r\n		var str = data.toString(\'utf8\', 6);   // 1100201507100022(网关序列号)\r\n\r\n		// 查询传感器在线状态 	返回 15 01 00 00 00 04 ff 01 01 02	取02，转二进制0010 => 第二个设备在线\r\n		// socket.write(\'150100000006FF0155550008\', \'hex\');	\r\n		\r\n		// 查询02传感器各通道数据 	返回  15 01 00 00 00 13 02 03 10 /01 81 01 17 /02 01 02 3b /03 00 00 49 /14 00 01 9c\r\n		// 4个通道的数据类型 1（温度）=> 01 17、	2（湿度）=> 02 3b、	3（照度）=> 00 49、	14（CO2）=> 01 9c，转十进制为 27.9 、57.2 、73 、412\r\n		// socket.write(\'150100000006020300000008\', \'hex\');	\r\n\r\n		if (str != \'1100201507100022\') {		// 接收数据\r\n			var data_str = data.toString(\'hex\').substr(18);\r\n			var data_time = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");\r\n\r\n			// 清空原数据\r\n			var delSql = "DELETE FROM data WHERE gateway_logo=" + gateway_logo;\r\n\r\n			db.query(delSql, function(err, res) {\r\n				if (err) {\r\n					util.log(\'delete error: \' + err.message);\r\n					return ;\r\n				}\r\n\r\n				util.log(\'affectedRows: \' + res.affectedRows, \'\\n\\n\');\r\n			});\r\n\r\n			// 添加新数据\r\n			for (var i = 0; i < data_str.length/8; i++) {\r\n				var channel_num = data_str.substr(i * 8 + 0, 2);\r\n				var float = data_str.substr(i * 8 + 2, 2);\r\n				var value = parseInt(data_str.substr(i * 8 + 4, 4), 16) / Math.pow(10, float.charAt(1));\r\n\r\n				// db.connect();\r\n				var addSql = "INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";\r\n				var addSqlParams = [data_time, gateway_logo, 2, parseInt(i) + 1, parseInt(channel_num), value, 0];\r\n\r\n				db.query(addSql, addSqlParams, function(err, res) {\r\n					if (err) {\r\n						util.log(err.message);\r\n						return ;\r\n					}\r\n\r\n					util.log(dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"), \'\\n\\n\', \'insertId: \', res.insertId);\r\n				});\r\n				// db.end();\r\n			}\r\n\r\n			for (key in clients) {\r\n				clearInterval(clients[key].interval);\r\n				clients[key].interval = setInterval(function(_socket, _key) {\r\n					_socket.write(\'150100000006020300000008\', \'hex\');\r\n				}, 5 * 1000 * 60, clients[key], key);\r\n			}\r\n		} else {		// 第一次连接\r\n			clients[hexData.substr(0, 18)] = socket;\r\n			gateway_logo = str;\r\n		}\r\n	});\r\n\r\n	socket.on(\'close\', function() {\r\n		for (key in clients) {\r\n			if (clients[key] === socket) {\r\n				util.log(\'Client:\' + key + \' end\');\r\n				clearInterval(clients[key].interval);\r\n				delete clients[key];\r\n				break;\r\n			};\r\n		}\r\n		util.log(\'one client end\');\r\n	})\r\n}).listen(7003, \'192.168.0.111\');\r\n~~~', 0, 0, 1506044837, 1506050221),
 (31, 'CURL 抓知乎日报的文章', 1, 4, NULL, '~~~php\r\n<?php \r\n\r\n$ch = curl_init();\r\n$url = \'http://daily.zhihu.com\';\r\n\r\n$options = [\r\n	CURLOPT_URL => $url,\r\n	CURLOPT_RETURNTRANSFER => 1,\r\n	CURLOPT_TIMEOUT => 30,\r\n	CURLOPT_REFERER => $url,\r\n];\r\ncurl_setopt_array($ch, $options);\r\n$res = curl_exec($ch);\r\ncurl_close($ch);\r\n\r\n// U（贪婪模式），i（忽略大小写），s（匹配换行）\r\n$a_preg = \'/<div class="box">.*<a href="(?<href>.*)".*<img src="(?<img_url>.*)".*<span class="title">(?<title>.*)<\\/span>/Uis\';\r\n\r\n// 匹配文章连接部分\r\npreg_match_all($a_preg, $res, $matchs);\r\n\r\n$data = [];\r\nfor ($i = 0; $i < count($matchs[\'href\']); $i++) {\r\n	$title = str_replace(PHP_EOL, \'\', $matchs[\'title\'][$i]);		// 去空格、换行符\r\n	$href = (strpos($matchs[\'href\'][$i], \'http\') === false) ? $url . $matchs[\'href\'][$i] : $matchs[\'href\'][$i];			// 判断绝对还是相对路径\r\n	$img_url = (strpos($matchs[\'img_url\'][$i], \'http\') === false) ? $url . $matchs[\'img_url\'][$i] : $matchs[\'img_url\'][$i];\r\n\r\n	// 保存文章title图片到本地\r\n	$filepath = save_img(\'./uploads/\', $img_url);\r\n\r\n	$curl = curl_init();\r\n\r\n	$options = [\r\n		CURLOPT_URL => $href,\r\n		CURLOPT_RETURNTRANSFER => 1,\r\n		CURLOPT_TIMEOUT => 30,\r\n		CURLOPT_REFERER => $url,\r\n	];\r\n	curl_setopt_array($curl, $options);\r\n	$content_res = curl_exec($curl);\r\n	curl_close($curl);\r\n\r\n	$content_preg = \'/<div class="answer">.*<div class="meta">.*<div class="content">(?<content>.*)<\\/div>/Uis\';\r\n\r\n	// 匹配具体内容\r\n	preg_match_all($content_preg, $content_res, $content_matchs);\r\n\r\n	$content = $content_matchs[\'content\'][0];\r\n\r\n	// 保存内容图片到本地\r\n	preg_match_all(\'/\\<img.*src="(?<content_img_urls>.*)"/Uis\', $content, $content_img_urls);\r\n\r\n	$content_img_path = [];\r\n	foreach ($content_img_urls[\'content_img_urls\'] as $img) {\r\n		$content_img_path[] = save_img(\'./content/\', $img);\r\n	}\r\n\r\n	// 替换图片链接\r\n	$content = str_replace($content_img_urls[\'content_img_urls\'], $content_img_path, $content);\r\n\r\n	// 组合数据入库\r\n	$data[] = [\r\n		\'href\' => $href,\r\n		\'img_url\' => $filepath,\r\n		\'title\' => $title,\r\n		\'content\' => str_replace(PHP_EOL, \'\', $content),\r\n	];\r\n}\r\n\r\n// 保存图片到本地\r\nfunction save_img($path, $source) {\r\n	$ext = pathinfo($source, PATHINFO_EXTENSION);\r\n	$filename = uniqid () . \'.\' . $ext;\r\n	$filepath = $path . $filename;\r\n\r\n	if (file_put_contents($filepath, file_get_contents($source))) {\r\n		return $filepath;\r\n	}\r\n\r\n	return \'\';\r\n}\r\n\r\nvar_dump($data);\r\n~~~', 0, 1, 1506048130, 1506048352),
 (32, 'PDO & Mysqli 连接MySQL测试', 1, 4, NULL, '~~~php\r\n<?php\r\n\r\n// mysql\r\n$mysqli = new Mysqli(\'127.0.0.1\', \'root\', \'111111\');\r\n\r\nif ($mysqli->connect_error) {\r\n    die(\'Connect Error (\' . $mysqli->connect_errno . \') \'\r\n            . $mysqli->connect_error);\r\n}\r\n\r\necho \'Connection OK\';\r\n$mysqli->close();\r\n\r\n\r\n// PDO\r\n$pdo = new \\PDO("mysql:host=localhost;dbname=byt_danling_iot","root","111111");\r\n$data = $pdo->query("select * from byt_klha_data limit 1");\r\nvar_dump($data);\r\n$data = $data->fetchAll(PDO::FETCH_BOTH);\r\nvar_dump($data);\r\n~~~', 0, 1, 1506048450, 1506048450),
-(33, 'PHP SOAP 测试', 1, 4, NULL, '**服务器脚本：**\r\n\r\n~~~php\r\n<?php\r\n\r\nclass Service\r\n{\r\n    function HelloWorld()\r\n    {\r\n        return  "Hello";\r\n    }\r\n\r\n    function Add($a, $b)\r\n    {\r\n    	return $a + $b;\r\n    }\r\n\r\n}\r\n\r\n$server = new SoapServer(null, [\'uri\' => \'http://127.0.0.1/soap/service.php\']);\r\n\r\n// 添加处理请求的类\r\n$server->setClass("Service");\r\n\r\n// 导入函数\r\n$server->addFunction(SOAP_FUNCTIONS_ALL);\r\n\r\n$server->handle();\r\n~~~\r\n\r\n**客户端脚本：**  \r\n\r\n~~~php\r\n<?php\r\n\r\ntry {\r\n	// 参数1：URI of the WSDL file or NULL if working in non-WSDL mode.\r\n	// 参数2：An array of options. If working in WSDL mode, this parameter is optional. If working in non-WSDL mode, the location and uri options must be set, where location is the URL of the SOAP server to send the request to, and uri is the target namespace of the SOAP service.（数组，WSDL模式此参数可选，非WSDL模式必须指定\'location\'服务脚本地址,\'uri\'SOAP服务的目标命名空间）\r\n	$soap = new SoapClient(null, [\r\n		\'location\' => \'http://127.0.0.1/soap/service.php\',\r\n		\'uri\' => \'http://127.0.0.1/soap/\'\r\n	]);	\r\n	\r\n	echo $soap->Add(12, 2);\r\n} catch (SoapFault $e) {\r\n	$message = $e->getMessage();\r\n	var_dump($message);\r\n}\r\n~~~\r\n\r\n***注：不要在win环境下进行本地测试，你懂的***', 0, 1, 1506049490, 1506049490);
+(33, 'PHP SOAP 测试', 1, 4, NULL, '**服务器脚本：**\r\n\r\n~~~php\r\n<?php\r\n\r\nclass Service\r\n{\r\n    function HelloWorld()\r\n    {\r\n        return  "Hello";\r\n    }\r\n\r\n    function Add($a, $b)\r\n    {\r\n    	return $a + $b;\r\n    }\r\n\r\n}\r\n\r\n$server = new SoapServer(null, [\'uri\' => \'http://127.0.0.1/soap/service.php\']);\r\n\r\n// 添加处理请求的类\r\n$server->setClass("Service");\r\n\r\n// 导入函数\r\n$server->addFunction(SOAP_FUNCTIONS_ALL);\r\n\r\n$server->handle();\r\n~~~\r\n\r\n**客户端脚本：**  \r\n\r\n~~~php\r\n<?php\r\n\r\ntry {\r\n	// 参数1：URI of the WSDL file or NULL if working in non-WSDL mode.\r\n	// 参数2：An array of options. If working in WSDL mode, this parameter is optional. If working in non-WSDL mode, the location and uri options must be set, where location is the URL of the SOAP server to send the request to, and uri is the target namespace of the SOAP service.（数组，WSDL模式此参数可选，非WSDL模式必须指定\'location\'服务脚本地址,\'uri\'SOAP服务的目标命名空间）\r\n	$soap = new SoapClient(null, [\r\n		\'location\' => \'http://127.0.0.1/soap/service.php\',\r\n		\'uri\' => \'http://127.0.0.1/soap/\'\r\n	]);	\r\n	\r\n	echo $soap->Add(12, 2);\r\n} catch (SoapFault $e) {\r\n	$message = $e->getMessage();\r\n	var_dump($message);\r\n}\r\n~~~\r\n\r\n***注：不要在win环境下进行本地测试，你懂的***', 0, 1, 1506049490, 1506073838);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `life`
+-- Table structure for table `life`
 --
 
 CREATE TABLE `life` (
@@ -124,16 +124,16 @@ CREATE TABLE `life` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='生活';
 
 --
--- 转存表中的数据 `life`
+-- Dumping data for table `life`
 --
 
 INSERT INTO `life` (`id`, `title`, `uid`, `cid`, `cover`, `content`, `remend`, `status`, `created_at`, `updated_at`) VALUES
-(1, '南山忆', 1, 6, '/uploads/cover/59c1f5e196545_vae.jpg', '<p style="text-align: center;"><img src="/uploads/ueditor/images/20170920/150588396379592895.jpg" title="150588396379592895.jpg" alt="南山忆.jpg"/></p><p><br/></p><p style="text-align: center;">乘一叶扁舟 入景随风望江畔渔火</p><p style="text-align: center;">转竹林深处 残碑小筑僧侣始复诵</p><p style="text-align: center;">苇岸红亭中 抖抖绿蓑邀南山对酌</p><p style="text-align: center;">纸钱晚风送 谁家又添新痛</p><p style="text-align: center;">独揽月下萤火 照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过</p><p style="text-align: center;">遥想多年前 烟花满天 你静静抱着我</p><p style="text-align: center;">丝竹声悠悠 教人忘忧 若南柯一梦</p><p style="text-align: center;">星斗青光透 时无英雄 心猿已深锁</p><p style="text-align: center;">可你辞世后 我再也没笑过</p><p style="text-align: center;">独揽月下萤火 照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过独揽月下萤火</p><p style="text-align: center;">照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过.</p><p><br/></p>', 0, 1, 1504777005, 1505883966);
+(1, '南山忆', 1, 6, '/uploads/cover/59c1f5e196545_vae.jpg', '<p style="text-align: center;"><img src="/uploads/ueditor/images/20170920/150588396379592895.jpg" title="150588396379592895.jpg" alt="南山忆.jpg"/></p><p><br/></p><p style="text-align: center;">乘一叶扁舟 入景随风望江畔渔火</p><p style="text-align: center;">转竹林深处 残碑小筑僧侣始复诵</p><p style="text-align: center;">苇岸红亭中 抖抖绿蓑邀南山对酌</p><p style="text-align: center;">纸钱晚风送 谁家又添新痛</p><p style="text-align: center;">独揽月下萤火 照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过</p><p style="text-align: center;">遥想多年前 烟花满天 你静静抱着我</p><p style="text-align: center;">丝竹声悠悠 教人忘忧 若南柯一梦</p><p style="text-align: center;">星斗青光透 时无英雄 心猿已深锁</p><p style="text-align: center;">可你辞世后 我再也没笑过</p><p style="text-align: center;">独揽月下萤火 照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过独揽月下萤火</p><p style="text-align: center;">照亮一纸寂寞</p><p style="text-align: center;">追忆那些什么 你说的爱我</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过</p><p style="text-align: center;">花开后花又落 轮回也没结果</p><p style="text-align: center;">苔上雪告诉我 你没归来过.</p><p><br/></p>', 0, 1, 1504777005, 1506073917);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `menu`
+-- Table structure for table `menu`
 --
 
 CREATE TABLE `menu` (
@@ -149,7 +149,7 @@ CREATE TABLE `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
 
 --
--- 转存表中的数据 `menu`
+-- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`id`, `parent_id`, `name`, `url`, `icon`, `type`, `status`, `created_at`, `updated_at`) VALUES
@@ -195,26 +195,26 @@ ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- 在导出的表使用AUTO_INCREMENT
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- 使用表AUTO_INCREMENT `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- 使用表AUTO_INCREMENT `learning`
+-- AUTO_INCREMENT for table `learning`
 --
 ALTER TABLE `learning`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
--- 使用表AUTO_INCREMENT `life`
+-- AUTO_INCREMENT for table `life`
 --
 ALTER TABLE `life`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- 使用表AUTO_INCREMENT `menu`
+-- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;

@@ -4,7 +4,7 @@ return [
     /*Public*/
     'Close' => '关闭',
     'Open' => '正常',
-    'Success' => '成功失败',
+    'Success' => '成功',
     'Failed' => '失败',
     'ID' => 'ID',
     'Type' => '类型',

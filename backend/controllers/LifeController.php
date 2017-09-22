@@ -107,14 +107,13 @@ class LifeController extends BaseBackendController
         }
     }
 
-    public function actions()
+    public function actionStatus($id = 0, $field = 'status', $val = 0)
     {
-        $actions = parent::actions();
-        $actions['status'] = [
-            'class' => StatusAction::className(),
-            'modelClass' => Life::className(),
-        ];
+        $model = Life::findOne($id);
+        if (! $model) {
+            return ['code' => 1, 'message' => "Cannot find model by $id"];
+        }
 
-        return $actions;
+        return $this->updateStatus($model, $field, $val);
     }
 }

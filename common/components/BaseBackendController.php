@@ -79,4 +79,22 @@ class BaseBackendController extends Controller
         ];
     }
 
+    public function updateStatus($model, $field, $val)
+    {
+        yii::$app->getResponse()->format = \yii\web\Response::FORMAT_JSON;
+        
+        $model->$field = $val;
+        if ($model->save(false)) {
+            return ['code' => 0, 'message' => yii::t('app', 'Success')];
+        } else {
+            $errors = $model->getErrors();
+            $err = '';
+            foreach ($errors as $v) {
+                $err .= $v[0] . '<br>';
+            }
+
+            return ['code' => 1, 'message' => $err];
+        }
+    }
+
 }
