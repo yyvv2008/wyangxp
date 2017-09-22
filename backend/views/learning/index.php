@@ -55,8 +55,10 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     'value' => function($model) {
                         if ($model->remend) {
                             $val = 0;
+                            $class = 'btn btn-info btn-xs btn-rounded';
                         } else {
                             $val = 1;
+                            $class = 'btn btn-default btn-xs btn-rounded';
                         }
 
                         return Html::a($model->remend_format, Url::toRoute(['status',
@@ -64,6 +66,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                             'field' => 'remend',
                             'val' => $val,
                         ]), [
+                            'class' => $class,
                             'data-confirm' => yii::t('app', 'Are you sure'),
                             'data-method' => 'post',
                             'data-pjax' => '0',     
@@ -78,8 +81,10 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     'value' => function($model) {
                         if ($model->status) {
                             $val = 0;
+                            $class = 'btn btn-info btn-xs btn-rounded';
                         } else {
                             $val = 1;
+                            $class = 'btn btn-default btn-xs btn-rounded';
                         }
 
                         return Html::a($model->status_format, Url::toRoute(['status',
@@ -87,6 +92,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                             'field' => 'status',
                             'val' => $val,
                         ]), [
+                            'class' => $class,
                             'data-confirm' => yii::t('app', 'Are you sure'),
                             'data-method' => 'post',
                             'data-pjax' => '0',     

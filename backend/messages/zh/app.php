@@ -21,6 +21,9 @@ return [
     'Are you sure' => '你确定',
 
     'No Hurry Hug Me' => '莫慌，抱紧哥',
+    'Yes' => '是',
+    'No' => '否',
+    'Remend' => '推荐',
 
 
     /*Menu*/
@@ -37,8 +40,6 @@ return [
     'Cid' => '分类',
     'Cover' => '封面',
     'Content' => '内容',
-    'Remend' => '推荐',
-    'Not Remend' => '不推荐',
 
 
     /*Learning*/

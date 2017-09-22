@@ -60,7 +60,7 @@ AppAsset::register($this);
         <!-- 顶部导航 -->
         <nav class="navbar navbar-static-top">
             <div class="navbar-left pull-left">
-                <?= Html::a('<i class="fa fa-bars"></i>', '#', ['class' => 'navbar-minimalize btn btn-sm']) ?>
+                <?= Html::a('<i class="fa fa-bars"></i>', '#', ['class' => 'navbar-minimalize btn btn-sm btn-info']) ?>
             </div>
 
             <ul class="navbar-right pull-right">

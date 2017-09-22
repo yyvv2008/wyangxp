@@ -26,11 +26,6 @@ form .form-control {
     display: inline-block;
 }
 
-.btn-main {
-    color: #fff;
-    background-color: #1ab394;
-}
-
 .btn-white {
     color: inherit;
     background: #fff;
@@ -220,7 +215,6 @@ body.mini-navbar .menu-label, body.mini-navbar .arrow, body.mini-navbar .menu-su
 
 .navbar-left a {
     color: #fff;
-    background-color: #1ab394;
     margin: 10px;
 }
 

@@ -88,8 +88,8 @@ class BaseModel extends \yii\db\ActiveRecord
     public static function loadremend()
     {
         return [
-            self::STATUS_NO => yii::t('app', 'Not Remend'),
-            self::STATUS_YES => yii::t('app', 'Remend'),
+            self::STATUS_NO => yii::t('app', 'No'),
+            self::STATUS_YES => yii::t('app', 'Yes'),
         ];
     }
 
