@@ -86,9 +86,18 @@ class LifeController extends BaseBackendController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if ($this->findModel($id)->delete()) {
+            yii::$app->getResponse()->format = \yii\web\Response::FORMAT_JSON;
+            return ['code' => 0, 'message' => yii::t('app', 'Success')];
+        }
+        
+        $errors = $model->getErrors();
+        $err = '';
+        foreach ($errors as $v) {
+            $err .= $v[0] . '<br>';
+        }
 
-        return $this->redirect(['index']);
+        return ['code' => 1, 'message' => $err];
     }
 
     /**

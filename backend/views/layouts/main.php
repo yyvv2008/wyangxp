@@ -27,7 +27,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <!-- 左侧导航 -->
-    <nav class="navbar-default navbar-static-side" role="navigation">
+    <nav class="navbar-default navbar-static-side bg-n" role="navigation">
         <ul id="side-menu">
             <li class="nav-header">
                 <div class="main-avatar">
@@ -58,7 +58,7 @@ AppAsset::register($this);
 
     <div id="content">
         <!-- 顶部导航 -->
-        <nav class="navbar navbar-static-top">
+        <nav class="navbar navbar-static-top bg-n">
             <div class="navbar-left pull-left">
                 <?= Html::a('<i class="fa fa-bars"></i>', '#', ['class' => 'navbar-minimalize btn btn-sm btn-info']) ?>
             </div>
@@ -67,12 +67,12 @@ AppAsset::register($this);
                 <li>
                     <?= Html::beginForm(['/site/logout'], 'post', ['id' => 'logout']); ?>
 
-                    <?= Html::a('<i class="fa fa-sign-out"></i> 退出系统', 'javascript:document.getElementById("logout").submit();', []) ?>
+                    <?= Html::a('<i class="fa fa-sign-out"></i> ' . yii::t('app', 'logout'), 'javascript:document.getElementById("logout").submit();', []) ?>
 
                     <?= Html::endForm(); ?>
                 </li>
                 <li>
-                    <?= Html::a('<i class="fa fa-internet-explorer"></i>　前台', 'http://wyangxp.com', ['target' => '_blank']) ?>
+                    <?= Html::a('<i class="fa fa-internet-explorer"></i>　' . yii::t('app', 'frontend'), 'http://wyxp', ['target' => '_blank']) ?>
                 </li>
             </ul>
         </nav>
@@ -82,7 +82,7 @@ AppAsset::register($this);
             <?= $content ?>
         </div>
 
-        <div class="footer">
+        <div class="footer bg-n">
             <div class="pull-left">蜀ICP备17007425号 © <?= date('Y') ?></div>
             <div class="pull-right">Powered by Yang</div>
         </div>

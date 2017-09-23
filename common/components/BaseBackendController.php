@@ -86,15 +86,15 @@ class BaseBackendController extends Controller
         $model->$field = $val;
         if ($model->save(false)) {
             return ['code' => 0, 'message' => yii::t('app', 'Success')];
-        } else {
-            $errors = $model->getErrors();
-            $err = '';
-            foreach ($errors as $v) {
-                $err .= $v[0] . '<br>';
-            }
-
-            return ['code' => 1, 'message' => $err];
         }
+
+        $errors = $model->getErrors();
+        $err = '';
+        foreach ($errors as $v) {
+            $err .= $v[0] . '<br>';
+        }
+
+        return ['code' => 1, 'message' => $err];
     }
 
 }

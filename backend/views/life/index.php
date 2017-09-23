@@ -20,7 +20,8 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            // 'rowOptions' => ['class' => 'grid_cover'],
+            'tableOptions' => ['class' => 'table table-bordered'],
+            // 'rowOptions' => ['class' => 'grid_row'],
             'headerRowOptions' => ['class' => 'grid_header'],
             'pager' => [
                 'options' => ['class' => 'pagination pull-right'],
@@ -114,7 +115,22 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}　{update}　{delete}',
-                    'buttonOptions' => ['data-pjax' => '1', 'class' => 'pjax'],
+                    'buttons' => [
+                        'view' => function($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::toRoute(['view', 'id' => $model->id]), ['class' => 'pjax']);
+                        },
+                        'update' => function($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['update', 'id' => $model->id]), ['class' => 'pjax']);
+                        },
+                        'delete' => function($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['delete', 'id' => $model->id]), [
+                                    'class' => 'del-pjax',
+                                    'data-confirm' => yii::t('app', 'Are you sure to delete it ?'),
+                                    'data-method' => 'post',
+                                    'data-pjax' => '0',  
+                                ]);
+                        },
+                    ],
                 ],
             ],
         ]); ?>

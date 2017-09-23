@@ -19,6 +19,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-bordered'],
             // 'rowOptions' => ['class' => 'grid_cover'],
             'headerRowOptions' => ['class' => 'grid_header'],
             'pager' => [

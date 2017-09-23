@@ -15,6 +15,7 @@ $this->title = $model->title;
     <?= DetailView::widget([
         'model' => $model,
         'template' => '<tr><th class="view_header" {captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
+        'options' => ['class' => 'table table-bordered'],
         'attributes' => [
             'id',
             'title',

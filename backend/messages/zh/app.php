@@ -19,12 +19,16 @@ return [
     'Upload {attribute} error' => '上传{attribute}出错',
     "Cannot find model by {id}" => "数据 {id} 不存在",
     'Are you sure' => '你确定',
+    'Are you sure to delete it ?' => '你确定要删？',
     'Incorrect username or password.' => '密码不对！！！',
 
     'No Hurry Hug Me' => '莫慌，抱紧哥',
     'Yes' => '是',
     'No' => '否',
     'Remend' => '推荐',
+
+    'logout' => '退出系统',
+    'frontend' => '前台',
 
 
     /*Menu*/

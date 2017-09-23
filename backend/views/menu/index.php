@@ -23,6 +23,8 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
     <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-bordered'],
+            'headerRowOptions' => ['class' => 'grid_header'],
             'columns' => [
                 // ['class' => 'yii\grid\SerialColumn'],
 
@@ -62,6 +64,7 @@ $this->title = Yii::t('app', 'No Hurry Hug Me');
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}　{delete}',
                     'headerOptions' => ['width' => '100px'],
+                    'buttonOptions' => ['data-pjax' => '1', 'class' => 'pjax'],
                 ],
             ],
         ]); ?>

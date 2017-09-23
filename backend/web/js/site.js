@@ -12,6 +12,7 @@ yii.confirm = function(message, ok, cancel) {
         if(isConfirm) {
             $.post(url, {}, function(data) {
                 if (data.code == 0) {
+                    swal('很好', '操作 666 !', "success");
                     $.pjax.reload('#container');
                 } else {
                     swal('失败', '操作有误 !', "error");
@@ -22,6 +23,7 @@ yii.confirm = function(message, ok, cancel) {
 }
 
 $(function() {
+    initBtn();
 	$('.nav-body>a').click(function() {
         $("body").hasClass("mini-navbar") && $(".navbar-minimalize").trigger("click");
         $(this).toggleClass('active');
@@ -49,9 +51,10 @@ $(function() {
         }
     })
 
+
 });
 
-$(document).pjax('a.pjax', '#container', {type: 'post', scrollTo: false});
+$(document).pjax('a.pjax, .pjax a', '#container', {type: 'post', scrollTo: false});
 
 // $(window).on('pjax:popstate', function(event) {
 //     $.pjax.reload('#container', {url: event.state.url});
@@ -64,3 +67,29 @@ $(document).on('submit', 'form.pjax', function(event) {
 $(document).on('pjax:success', function(event, json, status, xhr) {
     $('.grid-view').yiiGridView({"filterUrl": location.href, "filterSelector": "#w0-filters input, #w0-filters select"});
 });
+
+
+
+
+
+
+
+
+
+
+$(document).on('pjax:complete', function(event, res, status) {
+    initBtn();
+})
+
+
+function initBtn() {
+    $('.btn, .del-pjax').on('mousedown', function() {
+        $(this).css({'color': '#000', 'border-color': '#000', 'background': 'none'});
+    }).on('mouseup', function() {
+        $(this).css({'color': '#fff', 'border-color': '#fff', 'background': 'none'});
+    }).on('mouseleave', function() {
+        $(this).css({'color': '#fff', 'border-color': '#fff', 'background': 'none'});
+    }).on('mouseover', function() {
+        $(this).css({'color': '#000', 'border-color': '#000', 'background': 'none'});
+    });
+}

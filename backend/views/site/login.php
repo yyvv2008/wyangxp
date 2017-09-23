@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl . '/css/font-awesome.min.css' ?>">
+    <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl . '/css/font-awesome.css' ?>">
 </head>
 <style type="text/css">
     html, body {height: 100%; margin: 0px; padding: 0px;}
@@ -91,12 +91,12 @@ use yii\bootstrap\ActiveForm;
             ],
         ]); ?>
 
-            <?= $form->field($model, 'username')->textInput(['value' => 'wyang'])->label('<i class="fa fa-user"></i>') ?>
+            <?= $form->field($model, 'username')->textInput(['value' => 'wyang'])->label('<i class="fa fa-user-o"></i>') ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['autofocus' => true, 'placeholder' => '密码'])->label('<i class="fa fa-user"></i>') ?>
+            <?= $form->field($model, 'password')->passwordInput(['autofocus' => true, 'placeholder' => '密码'])->label('<i class="fa fa-key"></i>') ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'login-button']) ?>
+                <?= Html::submitButton('Login <i class="fa fa-sign-in pull-right"></i>', ['class' => 'login-button']) ?>
             </div>
 
         <?php ActiveForm::end(); ?>
