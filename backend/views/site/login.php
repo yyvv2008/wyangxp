@@ -43,13 +43,46 @@ use yii\bootstrap\ActiveForm;
         background: none;
         border: none;
         outline: none;
+        font-size: 16px;
+        width: 130px;
+        text-indent: 20px;
     }
 
+    input:focus {
+        border-color: #fff;
+    }
+
+    input::-webkit-input-placeholder{
+        color: #000;
+        opacity: 1;
+    }
+
+    .fa {
+        font-size: 18px;
+    }
+
+    label {
+        vertical-align: middle;
+    }
+
+    .login-button, .login-button:focus {
+        padding: 5px;
+        color: #000;
+        background: none;
+        border: 1px solid #000;
+        border-radius: 5px;
+        width: 160px;
+    }
+
+    .login-button:hover {
+        color: #fff;
+        border: 1px solid #fff;
+    }
 </style>
 <body>
 
     <div class="site-login">
-        <p class='avatar'><?= Html::img('../images/avatars.jpg', []) ?></p>
+        <p class='avatar'><?= Html::img(Yii::$app->request->baseUrl . '/images/avatar.jpg', []) ?></p>
 
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
@@ -58,12 +91,12 @@ use yii\bootstrap\ActiveForm;
             ],
         ]); ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'wyang', 'autocomplete' => "off"])->label('<i class="fa fa-user"></i>') ?>
+            <?= $form->field($model, 'username')->textInput(['value' => 'wyang'])->label('<i class="fa fa-user"></i>') ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'password'])->label('<i class="fa fa-user"></i>') ?>
+            <?= $form->field($model, 'password')->passwordInput(['autofocus' => true, 'placeholder' => '密码'])->label('<i class="fa fa-user"></i>') ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'login-button']) ?>
             </div>
 
         <?php ActiveForm::end(); ?>

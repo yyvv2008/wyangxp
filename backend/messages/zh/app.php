@@ -19,6 +19,7 @@ return [
     'Upload {attribute} error' => '上传{attribute}出错',
     "Cannot find model by {id}" => "数据 {id} 不存在",
     'Are you sure' => '你确定',
+    'Incorrect username or password.' => '密码不对！！！',
 
     'No Hurry Hug Me' => '莫慌，抱紧哥',
     'Yes' => '是',
