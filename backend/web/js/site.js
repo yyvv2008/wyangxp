@@ -78,7 +78,7 @@ $(document).on('pjax:success', function(event, json, status, xhr) {
 
 
 $(document).on('pjax:complete', function(event, res, status) {
-    initBtn();
+    // initBtn();
 })
 
 
