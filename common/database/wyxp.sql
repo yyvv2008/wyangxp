@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-09-23 09:29:03
+-- Generation Time: 2017-10-06 10:50:17
 -- 服务器版本： 5.7.17-log
 -- PHP Version: 7.1.0
 
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `wyxp`
@@ -36,7 +36,7 @@ CREATE TABLE `admin` (
   `status` int(11) NOT NULL DEFAULT '10' COMMENT '状态',
   `created_at` int(11) NOT NULL COMMENT '创建时间',
   `updated_at` int(11) NOT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理';
 
 --
 -- 转存表中的数据 `admin`
@@ -62,7 +62,7 @@ CREATE TABLE `learning` (
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` int(11) NOT NULL COMMENT '创建时间',
   `updated_at` int(11) NOT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `learning`
@@ -121,7 +121,7 @@ CREATE TABLE `life` (
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` int(11) NOT NULL COMMENT '创建时间',
   `updated_at` int(11) NOT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='生活';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='生活';
 
 --
 -- 转存表中的数据 `life`
@@ -146,7 +146,7 @@ CREATE TABLE `menu` (
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` int(11) NOT NULL COMMENT '创建时间',
   `updated_at` int(11) NOT NULL COMMENT '更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 --
 -- 转存表中的数据 `menu`
