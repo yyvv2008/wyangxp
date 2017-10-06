@@ -14,7 +14,7 @@ use yii\bootstrap\ActiveForm;
 <style type="text/css">
     html, body {height: 100%; margin: 0px; padding: 0px;}
     body {
-        background: url('../images/star.jpg') no-repeat 0 0;
+        background: url('<?= Yii::$app->request->baseUrl ?>/images/star.jpg') no-repeat 0 0;
         background-size: 100% 100%;
     }
 
